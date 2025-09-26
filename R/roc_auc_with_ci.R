@@ -18,6 +18,7 @@ roc_auc_with_ci <- function(data, conf= 0.95, type='bca', R = 100, parallel = "m
     return(results)
   }
   for(i in 1:nrow(AUC_res)){
+    print(sprintf("Calculating CI for %s", AUC_res$Var[i]))
     res_boot <- boot(data, statistic=multi_roc_auc, R, parallel = parallel, ncpus = ncpus)
     res_boot_ci <- boot.ci(res_boot, conf, type, index = i)
     roc_ci_all_res[i,3] <- res_boot_ci[[4]][1,4]
